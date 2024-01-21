@@ -1,0 +1,42 @@
+services:
+  app:
+    container_name: test_sawitpro_go_svc
+    build: .
+    ports:
+      - "8080:1323"
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@test_sawitpro_postgres:5432/test_sawitpro_db?sslmode=disable
+    # env_file:
+    #  - ./env.docker.local
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    container_name: test_sawitpro_postgres
+    platform: linux/x86_64
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: test_sawitpro_db
+    ports:
+      - 5431:5432
+    volumes:
+      - db:/var/lib/postgresql/data
+      # Load database schema from ./database.sql
+      # If you want to reload new database schema, you need to execute
+      # `docker-compose down --volumes` first to remove the volume.
+      - ./database.sql:/docker-entrypoint-initdb.d/database.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+networks:
+  default:
+    name: test_sawitpro_network
+volumes:
+  db:
+    name: test_sawitpro_db_volumes
+    driver: local

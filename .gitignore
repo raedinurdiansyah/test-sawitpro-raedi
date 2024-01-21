@@ -1,0 +1,30 @@
+# IDE configuration folder and file
+.vscode
+
+# Binaries for programs and plugins
+*.swp
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+__debug_bin
+cosmart-test-api
+
+# Test binary, built with `go test -c`
+*.test
+
+# env
+# *.env
+# *_env.sh
+# *.env.sh
+
+_VERSION
+_REVISION
+
+# Dependency directories (remove the comment below to include it)
+vendor/
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+*.xml
