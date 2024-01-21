@@ -23,7 +23,7 @@ _VERSION
 _REVISION
 
 # Dependency directories (remove the comment below to include it)
-vendor/
+*vendor/
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
